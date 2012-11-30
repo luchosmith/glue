@@ -101,7 +101,14 @@ $('document').ready(function(){
     if( !q ) {
       alert('enter a search term');
     } else {
+      
       var url = "http://search.guide.getglue.com/objects?q=" + q;
+      
+      var location = window.location.toString();
+      if (location.indexOf("luchosmith") > -1 ) {
+        url = 'proxy.php?url=' + url;
+      }
+
       $.ajax(url,{
           success: function(data, status, xhr){
             parseSearchResults(data);
