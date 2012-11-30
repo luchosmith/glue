@@ -1,6 +1,5 @@
 $('document').ready(function(){
   
-  
   // Model
   Media = Backbone.Model.extend({
     
@@ -105,6 +104,8 @@ $('document').ready(function(){
   // Create objects from search results
   function parseSearchResults(data){
     
+    $("#resultslist").html("");
+    
     $.each(data, function(i,x){
 
       var media = new Media({
@@ -140,6 +141,22 @@ $('document').ready(function(){
       $(e.target).parents("li").remove();
     }
   });
+  
+  
+  // Sortable
+  $("#watchlist").sortable({
+    stop: function( event, ui ) {
+      var itemId = event.srcElement.id;
+      var itemIndex = $(event.srcElement).index() + 1;
+      var item = appview.watchlist.get(itemId);
+      appview.watchlist.remove(itemId);
+      appview.watchlist.add(item,{at:itemIndex});
+      item.save();
+      // TODO: why isn't this working properly?
+    }
+  });
+  $("#watchlist").disableSelection();
+  
   
     // kickoff the app
   var appview = new AppView;
