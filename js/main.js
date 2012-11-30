@@ -133,7 +133,7 @@ $('document').ready(function(){
         title : x.title,
         score : Math.round(x.score),
         image_url : x.image_url,
-        type : x.object_key.split("/")[0].replace("_", " ")
+        type : determineType(x.object_key)
       });
       appview.results.add(media);
     });
@@ -141,6 +141,13 @@ $('document').ready(function(){
     if (!data.length) {
       $("#resultslist").append('<li>No results found</li>');
     }
+  }
+  
+  function determineType(key){
+    if (key) {
+      return key.split("/")[0].replace("_", " ");
+    }
+    return 'object';
   }
   
   
